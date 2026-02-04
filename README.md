@@ -2,7 +2,6 @@
 
 A production-ready API system to detect AI-generated voice samples vs Human speech, supporting **Tamil, English, Hindi, Malayalam, and Telugu** for the **AI-Generated Voice Detection** competition.
 
----
 
 ## 🎯 Project Overview
 
@@ -15,7 +14,6 @@ A production-ready API system to detect AI-generated voice samples vs Human spee
 - Malayalam
 - Telugu
 
----
 
 ## 🚀 Quick Start
 
@@ -36,7 +34,6 @@ python src/gradio_app.py
 ```
 Interactive UI at `http://localhost:7861`
 
----
 
 ## 🔌 API Specification
 
@@ -78,15 +75,6 @@ POST /api/voice-detection
 }
 ```
 
-### Response Fields
-| Field | Description |
-|-------|-------------|
-| `status` | `success` or `error` |
-| `language` | Language of the audio |
-| `classification` | `AI_GENERATED` or `HUMAN` |
-| `confidenceScore` | Value between 0.0 and 1.0 |
-| `explanation` | Short reason for the decision |
-
 ### Error Response
 ```json
 {
@@ -94,8 +82,6 @@ POST /api/voice-detection
   "message": "Invalid API key or malformed request"
 }
 ```
-
----
 
 ## 🔐 For Competition Endpoint Tester
 
@@ -111,7 +97,6 @@ curl -X POST https://your-domain.com/api/voice-detection \
   }'
 ```
 
----
 
 ## 🛠 Deployment Options
 
@@ -135,16 +120,6 @@ Use the `https://xxxx.ngrok.io` URL for the endpoint tester.
 4. Build Command: `pip install -r requirements.txt`
 5. Start Command: `uvicorn src.api.main:app --host 0.0.0.0 --port $PORT`
 
-### Option 3: Railway
-```bash
-# Install Railway CLI
-npm install -g @railway/cli
-
-# Deploy
-railway up
-```
-
----
 
 ## 📁 Project Structure
 
@@ -180,7 +155,6 @@ why/
 └── README.md
 ```
 
----
 
 ## 📊 Model Performance
 
@@ -193,73 +167,6 @@ why/
 | **Features** | 37 DSP features (MFCC, Spectral, Pitch) |
 | **Full API Latency** | < 2 seconds |
 
-### Per-Language Accuracy
-
-| Language | Accuracy |
-|----------|----------|
-| English | **100.0%** |
-| Tamil | **88.2%** |
-| Hindi | **100.0%** |
-| Malayalam | **90.9%** |
-| Telugu | **100.0%** |
-
-### Confusion Matrix
-
-|  | Predicted HUMAN | Predicted AI |
-|--|-----------------|--------------|
-| **Actual HUMAN** | 46 | 4 |
-| **Actual AI** | 0 | 19 |
-
-### Latency Benchmarks
-
-| Component | Latency |
-|-----------|---------|
-| Model Prediction | ~78ms |
-| Full API Request | ~500-1500ms |
-
-> See `docs/` folder for confusion matrix and calibration curve images.
-
-
-
-## 🧪 Testing Locally
-
-### Test with cURL
-```bash
-# Encode audio to base64
-base64 -i test.mp3 > audio.b64
-
-# Send request
-curl -X POST "http://localhost:8000/api/voice-detection" \
-  -H "x-api-key: YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "language": "English",
-    "audioFormat": "mp3",
-    "audioBase64": "'$(cat audio.b64)'"
-  }'
-```
-
-### Test with Python
-```python
-import requests
-import base64
-
-with open("test.mp3", "rb") as f:
-    audio_b64 = base64.b64encode(f.read()).decode()
-
-response = requests.post(
-    "http://localhost:8000/api/voice-detection",
-    headers={"x-api-key": "YOUR_API_KEY"},
-    json={
-        "language": "English",
-        "audioFormat": "mp3",
-        "audioBase64": audio_b64
-    }
-)
-print(response.json())
-```
-
----
 
 ## ⚙️ Configuration
 
@@ -268,8 +175,6 @@ print(response.json())
 API_KEY=your_secure_api_key
 HF_TOKEN=your_huggingface_token
 ```
-
----
 
 ## ✅ Competition Compliance
 
@@ -284,7 +189,6 @@ HF_TOKEN=your_huggingface_token
 | No hardcoded responses | ✅ Real ML model |
 | No restricted external APIs | ✅ Only local model |
 
----
 
 ## 📜 License
 
