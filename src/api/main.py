@@ -106,13 +106,14 @@ async def detect_voice(request: DetectionRequest, x_api_key: str = Header(None))
         
         language_name = SUPPORTED_LANGUAGES[lang_normalized]
         
-        # Validate audio format (only mp3 as per competition rules)
-        if request.audio_format.lower() != 'mp3':
+        # Validate audio format (expanded for flexibility)
+        supported_formats = ['mp3', 'wav', 'flac', 'ogg', 'm4a']
+        if request.audio_format.lower() not in supported_formats:
             return JSONResponse(
                 status_code=400,
                 content={
                     "status": "error",
-                    "message": f"Unsupported format: {request.audio_format}. Only mp3 is supported."
+                    "message": f"Unsupported format: {request.audio_format}. Supported: {', '.join(supported_formats)}"
                 }
             )
         
