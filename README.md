@@ -1,3 +1,13 @@
+---
+title: AI Voice Detection API
+emoji: 🕵️
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # 🕵️ AI Voice Detection System
 
 A production-ready API system to detect AI-generated voice samples vs Human speech, supporting **Tamil, English, Hindi, Malayalam, and Telugu** for the **AI-Generated Voice Detection** competition.
