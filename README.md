@@ -124,7 +124,7 @@ Use the `https://xxxx.ngrok.io` URL for the endpoint tester.
 ## 📁 Project Structure
 
 ```
-why/
+v-dectection/
 ├── data/
 │   ├── raw/
 │   │   ├── human/          # Human voice samples
