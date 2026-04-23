@@ -1,9 +1,6 @@
 ---
 title: AI Voice Detection API
 emoji: 🕵️
-colorFrom: blue
-colorTo: purple
-sdk: docker
 app_port: 7860
 pinned: false
 ---
@@ -172,10 +169,9 @@ v-dectection/
 
 | Metric | Value |
 |--------|-------|
-| **Test Accuracy** | 95.7% |
-| **Model Type** | Random Forest (Calibrated) |
-| **Features** | 37 DSP features (MFCC, Spectral, Pitch) |
-| **Full API Latency** | < 2 seconds |
+| **Model Type** | Ensemble (Wav2Vec2 + Random Forest v2) |
+| **Features** | ~85 DSP features (MFCC, Formants, Jitter, Shimmer) + Deep Neural Embeddings |
+| **Full API Latency** | < 10 seconds |
 
 
 ## ⚙️ Configuration
@@ -202,4 +198,4 @@ HF_TOKEN=your_huggingface_token
 
 ## 📜 License
 
-This project is for competition purposes.
+This project was for competition purposes.
