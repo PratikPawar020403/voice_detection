@@ -71,3 +71,11 @@ data/features/
 !data/master_dataset.csv
 !models/
 !docs/
+
+voice_detection_v2/
+*.pt
+*.mp3
+*.wav
+*.gif
+*.jpg
+*.mpeg

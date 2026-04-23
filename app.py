@@ -15,7 +15,6 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from src.api.schemas import DetectionRequest, DetectionResponse, ErrorResponse
 from src.api.inference import predict_pipeline, load_resources
-from src.api.lid import identify_language
 
 # ===================== FASTAPI SETUP =====================
 api_app = FastAPI(
@@ -52,7 +51,7 @@ def fix_base64_padding(b64_string: str) -> str:
         b64_string += '=' * (4 - padding_needed)
     return b64_string
 
-@api_app.get("/")
+@api_app.get("/api/health")
 def health_check():
     return {"status": "online", "model_loaded": True}
 
@@ -111,7 +110,7 @@ def file_to_bytes(file):
 
 def analyze_audio(audio_file):
     if audio_file is None:
-        return None, "No file uploaded.", "Unknown"
+        return None, "No file uploaded."
     
     try:
         audio_bytes = file_to_bytes(audio_file)
@@ -122,11 +121,10 @@ def analyze_audio(audio_file):
         else:
             scores = {"HUMAN": result['confidence'], "AI_GENERATED": 1 - result['confidence']}
         
-        lang_id = identify_language(audio_file)
-        return scores, result['explanation'], lang_id
+        return scores, result['explanation']
         
     except Exception as e:
-        return None, str(e), "Error"
+        return None, str(e)
 
 with gr.Blocks(title="AI Voice Detector") as demo:
     gr.Markdown("# 🕵️ AI Voice Detection System")
@@ -139,14 +137,13 @@ with gr.Blocks(title="AI Voice Detector") as demo:
             submit_btn = gr.Button("Analyze", variant="primary")
         with gr.Column():
             result_label = gr.Label(label="Prediction")
-            lang_label = gr.Textbox(label="Detected Language")
             explanation_box = gr.Textbox(label="Explanation", lines=3)
     
-    submit_btn.click(fn=analyze_audio, inputs=[audio_input], outputs=[result_label, explanation_box, lang_label])
+    submit_btn.click(fn=analyze_audio, inputs=[audio_input], outputs=[result_label, explanation_box])
 
 # ===================== MOUNT TOGETHER =====================
 # Mount FastAPI inside Gradio
-app = gr.mount_gradio_app(api_app, demo, path="/demo")
+app = gr.mount_gradio_app(api_app, demo, path="/")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=7860)
